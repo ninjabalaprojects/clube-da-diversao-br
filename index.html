@@ -3099,6 +3099,7 @@ footer strong { color: #fff; }
   /* ---------- Upsell Popup ---------- */
   var couponCount = 10;
   var couponStarted = false;
+  var BASIC_URL = 'https://pay.cakto.com.br/kcipep3_901570';
 
   function startCouponCountdown() {
     if (couponStarted) return;
@@ -3115,17 +3116,35 @@ footer strong { color: #fff; }
     setTimeout(tick, 2000);
   }
 
-  document.querySelector('.btn-green-3d.btn-full').addEventListener('click', function(e) {
-    e.preventDefault();
+  function openUpsell() {
     document.getElementById('upsellOverlay').classList.add('active');
     document.body.style.overflow = 'hidden';
     startCouponCountdown();
-  });
+  }
 
   function closeUpsell() {
     document.getElementById('upsellOverlay').classList.remove('active');
     document.body.style.overflow = '';
   }
+
+  function declineUpsell() {
+    closeUpsell();
+    window.location.href = BASIC_URL;
+  }
+
+  // Corrige duplo toque iOS — usa touchstart + flag
+  var basicBtn = document.querySelector('.btn-green-3d.btn-full');
+  var tapped = false;
+  basicBtn.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    tapped = true;
+    openUpsell();
+  }, { passive: false });
+  basicBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (!tapped) openUpsell();
+    tapped = false;
+  });
 
   document.getElementById('upsellOverlay').addEventListener('click', function(e) {
     if (e.target === this) closeUpsell();
@@ -3171,7 +3190,7 @@ footer strong { color: #fff; }
       </ul>
 
       <a href="https://pay.cakto.com.br/798oshj_901563" class="upsell-btn-yes">🚀 SIM, QUERO TODOS OS BÔNUS</a>
-      <a href="#" class="upsell-btn-no" onclick="closeUpsell(); return false;">Não, obrigada. Continuar apenas com o Básico.</a>
+      <button class="upsell-btn-no" onclick="declineUpsell()">Não, obrigada. Continuar apenas com o Básico.</button>
     </div>
   </div>
 </div>
