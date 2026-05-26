@@ -2109,7 +2109,7 @@ footer strong { color: #fff; }
     <img src="images/img1.png" alt="Kit Clubinho da Diversão" class="hero-img reveal d2" style="width:90%;max-width:320px;display:block;margin:28px auto 36px;border-radius:24px;object-fit:cover;box-shadow:0 8px 32px rgba(123,63,160,.18);border:3px solid #E8D8F8;">
 
     <div class="reveal d3" style="text-align:center;">
-      <a href="#pricing" class="btn btn-hero btn-pulse">🎁 SIM, QUERO ACESSAR O KIT →</a>
+      <a href="https://pay.cakto.com.br/kcipep3_901570" class="btn btn-hero btn-pulse">🎁 SIM, QUERO ACESSAR O KIT →</a>
     </div>
 
     <!-- chips 2×2 -->
@@ -2567,7 +2567,7 @@ footer strong { color: #fff; }
           <li><span class="pcheck">✓</span> Copa dos Nomes</li>
           <li><span class="pcheck">✓</span> Chocalho Musical — Patinho Colorido</li>
         </ul>
-        <a href="#" class="btn btn-green-3d btn-full">Quero o Básico</a>
+        <a href="https://pay.cakto.com.br/kcipep3_901570" class="btn btn-green-3d btn-full">Quero o Básico</a>
         <div class="pcard-trust">
           <span>🔒 Compra Segura</span>
           <span>🔑 Acesso Imediato</span>
@@ -2594,7 +2594,7 @@ footer strong { color: #fff; }
           <li><span class="pstar">⭐</span> Guia Zero Comportamentos Críticos</li>
           <li><span class="pstar">⭐</span> Manual Desvendando o Autismo</li>
         </ul>
-        <a href="#" class="btn btn-violet-3d btn-full btn-pulse">🎁 Quero Essa Super Oferta</a>
+        <a href="https://pay.cakto.com.br/kho3dwv_901522" class="btn btn-violet-3d btn-full btn-pulse">🎁 Quero Essa Super Oferta</a>
         <div class="pcard-oferta">Oferta por tempo limitado ✨</div>
       </div>
 
@@ -2674,8 +2674,8 @@ footer strong { color: #fff; }
     </div>
 
     <div class="compare-cta-row reveal d2">
-      <a href="#pricing" class="btn-compare-basic">Quero o Básico</a>
-      <a href="#pricing" class="btn-compare-complete btn-pulse">🎁 Quero o Completo</a>
+      <a href="https://pay.cakto.com.br/kcipep3_901570" class="btn-compare-basic">Quero o Básico</a>
+      <a href="https://pay.cakto.com.br/kho3dwv_901522" class="btn-compare-complete btn-pulse">🎁 Quero o Completo</a>
     </div>
 
   </div>
@@ -2771,7 +2771,7 @@ footer strong { color: #fff; }
     <p class="reveal d3">Materiais pedagógicos prontos para usar hoje. Para todas as crianças — neurotípicas e neurodivergentes.</p>
 
     <div class="reveal d3" style="max-width:340px;margin:0 auto 18px;">
-      <a href="#pricing" class="btn-green-3d btn-full btn-pulse">🎁 QUERO ACESSAR O CLUBINHO AGORA →</a>
+      <a href="https://pay.cakto.com.br/kcipep3_901570" class="btn-green-3d btn-full btn-pulse">🎁 QUERO ACESSAR O CLUBINHO AGORA →</a>
     </div>
 
     <div class="final-trust reveal d3">
@@ -3097,10 +3097,29 @@ footer strong { color: #fff; }
   });
 
   /* ---------- Upsell Popup ---------- */
+  var couponCount = 10;
+  var couponStarted = false;
+
+  function startCouponCountdown() {
+    if (couponStarted) return;
+    couponStarted = true;
+    function tick() {
+      var el = document.getElementById('couponCount');
+      if (!el || couponCount <= 1) return;
+      couponCount--;
+      el.textContent = couponCount;
+      el.style.transform = 'scale(1.4)';
+      setTimeout(function(){ el.style.transform = 'scale(1)'; }, 200);
+      setTimeout(tick, 3000 + Math.random() * 4000);
+    }
+    setTimeout(tick, 2000);
+  }
+
   document.querySelector('.btn-green-3d.btn-full').addEventListener('click', function(e) {
     e.preventDefault();
     document.getElementById('upsellOverlay').classList.add('active');
     document.body.style.overflow = 'hidden';
+    startCouponCountdown();
   });
 
   function closeUpsell() {
@@ -3151,27 +3170,12 @@ footer strong { color: #fff; }
         <li><span class="upsell-check">✓</span> Todos os bônus do Pacote Completo</li>
       </ul>
 
-      <a href="#" class="upsell-btn-yes">🚀 SIM, QUERO TODOS OS BÔNUS</a>
+      <a href="https://pay.cakto.com.br/798oshj_901563" class="upsell-btn-yes">🚀 SIM, QUERO TODOS OS BÔNUS</a>
       <a href="#" class="upsell-btn-no" onclick="closeUpsell(); return false;">Não, obrigada. Continuar apenas com o Básico.</a>
     </div>
   </div>
 </div>
 
-<script>
-  (function() {
-    var count = 10;
-    function tick() {
-      var el = document.getElementById('couponCount');
-      if (!el || count <= 1) return;
-      count--;
-      el.textContent = count;
-      el.style.transform = 'scale(1.4)';
-      setTimeout(function(){ el.style.transform = 'scale(1)'; }, 200);
-      setTimeout(tick, 3000 + Math.random() * 4000);
-    }
-    setTimeout(tick, 3000);
-  })();
-</script>
 
 </body>
 </html>
