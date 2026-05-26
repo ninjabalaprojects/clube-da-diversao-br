@@ -2674,7 +2674,7 @@ footer strong { color: #fff; }
     </div>
 
     <div class="compare-cta-row reveal d2">
-      <a href="#" class="btn-compare-basic" onclick="openUpsell();return false;">Quero o Básico</a>
+      <a href="#" class="btn-compare-basic" >Quero o Básico</a>
       <a href="https://pay.cakto.com.br/kho3dwv_901522" class="btn-compare-complete btn-pulse">🎁 Quero o Completo</a>
     </div>
 
@@ -3132,14 +3132,22 @@ footer strong { color: #fff; }
     window.location.href = BASIC_URL;
   }
 
-  // Corrige duplo toque iOS — usa touchstart + flag
-  var basicBtn = document.querySelector('.btn-green-3d.btn-full');
+  // Corrige duplo toque iOS em todos os botões que abrem o upsell
   var tapped = false;
-  basicBtn.addEventListener('touchstart', function(e) {
-    e.preventDefault();
-    tapped = true;
-    openUpsell();
-  }, { passive: false });
+  function attachUpsellTouch(el) {
+    if (!el) return;
+    el.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      tapped = true;
+      openUpsell();
+    }, { passive: false });
+  }
+
+  var basicBtn = document.querySelector('.btn-green-3d.btn-full');
+  attachUpsellTouch(basicBtn);
+
+  var compareBasicBtn = document.querySelector('.btn-compare-basic');
+  attachUpsellTouch(compareBasicBtn);
   basicBtn.addEventListener('click', function(e) {
     e.preventDefault();
     if (!tapped) openUpsell();
