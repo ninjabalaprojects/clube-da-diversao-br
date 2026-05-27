@@ -3212,5 +3212,56 @@ footer strong { color: #fff; }
 </div>
 
 
+
+<script>
+  /* ---------- UTMify: preserva UTMs nos links de checkout ---------- */
+  (function () {
+    var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'src'];
+    var stored = {};
+
+    // Tenta recuperar UTMs já salvos (ex: usuário que navegou antes)
+    try {
+      var saved = sessionStorage.getItem('_utmify');
+      if (saved) stored = JSON.parse(saved);
+    } catch (e) {}
+
+    // Lê UTMs da URL atual e sobrescreve os salvos
+    var params = new URLSearchParams(window.location.search);
+    UTM_KEYS.forEach(function (k) {
+      if (params.get(k)) stored[k] = params.get(k);
+    });
+
+    // Persiste para essa sessão
+    try { sessionStorage.setItem('_utmify', JSON.stringify(stored)); } catch (e) {}
+
+    function appendUtms(url) {
+      if (!url || url === '#') return url;
+      var keys = Object.keys(stored);
+      if (!keys.length) return url;
+      var qs = keys.map(function (k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(stored[k]);
+      }).join('&');
+      return url + (url.indexOf('?') !== -1 ? '&' : '?') + qs;
+    }
+
+    function injectLinks() {
+      // Atualiza todos os <a> que apontam para o Cakto
+      document.querySelectorAll('a[href*="pay.cakto.com.br"]').forEach(function (el) {
+        el.href = appendUtms(el.getAttribute('href'));
+      });
+
+      // Atualiza a variável global usada no declineUpsell
+      if (typeof BASIC_URL !== 'undefined') {
+        BASIC_URL = appendUtms(BASIC_URL);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', injectLinks);
+    } else {
+      injectLinks();
+    }
+  })();
+</script>
 </body>
 </html>
